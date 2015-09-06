@@ -1,4 +1,4 @@
-# NPR API Elia Grenier
+# Foodie APIs Elia Grenier
 ## Project Baseline
 
 - Anticipate spending 10-15 hours on this project over the break week.

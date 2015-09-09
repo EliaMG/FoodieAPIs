@@ -1,12 +1,20 @@
 class ApisController < ApplicationController
 
-    # JAM = "http://api.thisismyjam.com/1/search/jam.json"
+
+    NPR_SEARCH = "http://api.npr.org/query?id=1053&searchTerm="
+    NPR_OUTPUT = "output=JSON&searchType=mainText&apiKey="
+    #JAM = "http://api.thisismyjam.com/1/search/jam.json"
     # RANDO = "http://api.thisismyjam.com/1/explore/chance.json"
     # POPULAR = "http://api.thisismyjam.com/1/explore/popular.json"
     #
+    def seattle
+      npr_response = HTTParty.get(NPR_SEARCH + "Seattle" + NPR_OUTPUT + ENV["NPR_API"])
+      nyt_response =
+    end
+
     # def search
     #   begin
-    #     response = HTTParty.get(JAM, query: { "by" => "artist", "q" => params[:artist] })
+    #     response = HTTParty.get(NPR+ query:  + "&output=JSON&searchType=mainText&apiKey=" +  ){ "by" => "artist", "q" => params[:artist] })
     #     data = setup_data(response)
     #     code = :ok
     #   rescue

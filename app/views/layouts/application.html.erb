@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FoodieAPI</title>
+  <title>Local Foodie News</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link href='//fonts.googleapis.com/css?family=Bitter|Pacifico' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <main>
 
-<%= yield %>
+    <%= yield %>
 
+  </main>
 </body>
 </html>

@@ -8,8 +8,8 @@ class ApisController < ApplicationController
     # POPULAR = "http://api.thisismyjam.com/1/explore/popular.json"
     #
     def seattle
-      npr_response = HTTParty.get(NPR_SEARCH + "Seattle" + NPR_OUTPUT + ENV["NPR_API"])
-      nyt_response =
+      # npr_response = HTTParty.get(NPR_SEARCH + "Seattle" + NPR_OUTPUT + ENV["NPR_API"])
+      # nyt_response =
     end
 
     # def search

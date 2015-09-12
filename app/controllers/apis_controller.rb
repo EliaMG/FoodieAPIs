@@ -4,6 +4,8 @@ class ApisController < ApplicationController
   NPR_SEARCH = "http://api.npr.org/query?id=1053&searchTerm="
   NPR_OUTPUT = "&sort=dateDesc&output=JSON&searchType=mainText&apiKey="
 
+# http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=search term&fq=filter-field:(filter-term)&additional-params=values]&api-key=####
+&fq=news_desk:("Food")AND glocations:("SEATTLE")
   def seattle
     # begin
       npr_response = HTTParty.get(NPR_SEARCH + "Seattle" + NPR_OUTPUT + ENV["NPR_API"])
@@ -32,7 +34,8 @@ class ApisController < ApplicationController
   private
 
   def munge_npr(response)
-    stories = response.fetch["list"]["story"], {}
+    hash = JSON.parse(response)
+    stories = hash["list"]["story"]
     stories.map do |story|
       {
         link: story.fetch("link", ""),
@@ -40,6 +43,7 @@ class ApisController < ApplicationController
         teaser: story.fetch("teaser", ""),
         date: story.fetch("storyDate", ""),
         image: story.fetch("image", ""),
+        text: story.fetch("fullText", "")
       }
     end
   end

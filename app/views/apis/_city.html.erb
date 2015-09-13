@@ -4,9 +4,29 @@
     <h1><%=city%></h1>
     <p>
 
-      <!-- #<%= @npr_data %> -->
-      <br>
-      <%= @nyt_travel %>
+      <% @npr_data.each do |story| %>
+      <% story_array = parse_npr_story(story) %>
+      <article class="npr-article">
+
+      <div class="story-title">
+        <%= story_array[0] %>
+      </div>
+      <div class="story-link">
+        <%= link_to "Go to Story", story_array[1], target: "_blank"  %>
+      </div>
+      <div class="story-image">
+        <%= image_tag(story_array[2], alt: story_array[3]) %>
+      </div>
+      <div class="story-caption">
+        <%= story_array[3] %>
+      </div>
+      <div class="story-teaser">
+        <%= story_array[4] %>
+      </div>
+
+      </article>
+      <% end %>
+      <!-- <%= @nyt_travel %> -->
     </p>
   </div>
 </div>

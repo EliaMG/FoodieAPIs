@@ -76,8 +76,7 @@ private
           title: story.fetch("title", ""),
           teaser: story.fetch("teaser", ""),
           date: story.fetch("storyDate", ""),
-          image: story.fetch("image", ""),
-          text: story.fetch("fullText", "")
+          image: story.fetch("image", "")
         }
       end
     end

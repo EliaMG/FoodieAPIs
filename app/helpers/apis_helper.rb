@@ -3,10 +3,19 @@ module ApisHelper
     story_array = []
     title = story[:title]["$text"]
     link = story[:link][0]["$text"]
-    photo = story[:image][0]["src"]
-    caption = story[:image][0]["caption"]["$text"]
-    teaser = story[:teaser]["$text"]
-    story_array.push(title, link, photo, caption, teaser)
+
+    unless story[:image].empty?
+      photo = story[:image][0]["src"]
+      caption = story[:image][0]["caption"]["$text"]
+    end
+
+    teaser_with_tags = story[:teaser]["$text"]
+    teaser = strip_tags(teaser_with_tags)
+
+    messy_date = story[:date]["$text"]
+    date = messy_date[0..15]
+
+    story_array.push(title, link, photo, caption, teaser, date)
   end
 
 end

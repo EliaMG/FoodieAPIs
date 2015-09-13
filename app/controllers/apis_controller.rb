@@ -4,18 +4,22 @@ class ApisController < ApplicationController
   NPR_SEARCH = "http://api.npr.org/query?id=1053&searchTerm="
   NPR_OUTPUT = "&sort=dateDesc&output=JSON&searchType=mainText&apiKey="
 
+  NYT_SEARCH = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q="
+  NYT_TRAVEL = '&fq=news_desk:("Travel")&api-key='
+  NYT_FOOD = '&fq=news_desk:("Food")&api-key='
+
 # http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=search term&fq=filter-field:(filter-term)&additional-params=values]&api-key=####
-&fq=news_desk:("Food")AND glocations:("SEATTLE")
+# &fq=news_desk:("Food")AND glocations:("SEATTLE")
   def seattle
-    # begin
-      npr_response = HTTParty.get(NPR_SEARCH + "Seattle" + NPR_OUTPUT + ENV["NPR_API"])
-      @npr_data = munge_npr(npr_response)
+    @npr_data = get_npr("Seattle")
+
+    @nyt_response = get_nyt_travel("Seattle")
+
     #   code = :ok
     # rescue
     #   @npr_data = {}
     #   code = :no_content
     # end
-    # nyt_response =
   end
 
   # def search
@@ -32,6 +36,20 @@ class ApisController < ApplicationController
   # end
 
   private
+
+  def get_npr(city)
+    npr_response = HTTParty.get(NPR_SEARCH + city + NPR_OUTPUT + ENV["NPR_API"])
+    munge_npr(npr_response)
+  end
+
+  def get_nyt_travel(city)
+    url = NYT_SEARCH + city + NYT_TRAVEL + ENV["NYT_API"]
+    nyt_response = HTTParty.get(url)
+  end
+
+  def get_nyt_food(city)
+
+  end
 
   def munge_npr(response)
     hash = JSON.parse(response)

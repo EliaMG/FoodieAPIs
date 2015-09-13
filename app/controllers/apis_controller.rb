@@ -5,82 +5,62 @@ class ApisController < ApplicationController
   NPR_OUTPUT = "&sort=dateDesc&output=JSON&searchType=mainText&apiKey="
 
   NYT_SEARCH = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q="
-  NYT_TRAVEL = '&fq=news_desk:("Travel")&api-key='
-  NYT_FOOD = '&fq=news_desk:("Food")&api-key='
+  NYT_TRAVEL_DESK = '&fq=news_desk:("Travel")&api-key='
+  NYT_FOOD_DESK = '&fq=news_desk:("Food")&api-key='
 
-# http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=search term&fq=filter-field:(filter-term)&additional-params=values]&api-key=####
-# &fq=news_desk:("Food")AND glocations:("SEATTLE")
   def seattle
-    @npr_data = get_npr("Seattle")
+    get_city_data("Seattle")
+  end
 
-    @nyt_response = get_nyt_travel("Seattle")
-
+    # begin
     #   code = :ok
     # rescue
     #   @npr_data = {}
     #   code = :no_content
     # end
-  end
+    #   render json: data.as_json, code: code
 
-  # def search
-  #   begin
-  #     response = HTTParty.get(NPR+ query:  + "&output=JSON&searchType=mainText&apiKey=" +  ){ "by" => "artist", "q" => params[:artist] })
-  #     data = setup_data(response)
-  #     code = :ok
-  #   rescue
-  #     data = {}
-  #     code = :no_content
-  #   end
-  #
-  #   render json: data.as_json, code: code
-  # end
 
   private
 
-  def get_npr(city)
-    npr_response = HTTParty.get(NPR_SEARCH + city + NPR_OUTPUT + ENV["NPR_API"])
-    munge_npr(npr_response)
-  end
+    def get_city_data(city)
+      @npr_data = get_npr(city)
 
-  def get_nyt_travel(city)
-    url = NYT_SEARCH + city + NYT_TRAVEL + ENV["NYT_API"]
-    nyt_response = HTTParty.get(url)
-  end
-
-  def get_nyt_food(city)
-
-  end
-
-  def munge_npr(response)
-    hash = JSON.parse(response)
-    stories = hash["list"]["story"]
-    stories.map do |story|
-      {
-        link: story.fetch("link", ""),
-        title: story.fetch("title", ""),
-        teaser: story.fetch("teaser", ""),
-        date: story.fetch("storyDate", ""),
-        image: story.fetch("image", ""),
-        text: story.fetch("fullText", "")
-      }
+      @nyt_travel = get_nyt(city, NYT_TRAVEL_DESK)
+      @nyt_food = get_nyt(city, NYT_FOOD_DESK)
     end
-  end
-  #   jams = response.fetch "jams", {}
-  #
-  #   if response["list"]["next"].nil?
-  #     return jams
-  #   else
-  #     jams = jams.first(10)
-  #   end
-  #
-  #   jams.map do |jam|
-  #     {
-  #       via: jam.fetch("via", ""),
-  #       url: jam.fetch("viaUrl", ""),
-  #       title: jam.fetch("title", ""),
-  #       artist: jam.fetch("artist", "")
-  #     }
-  #   end
-  # end
 
+    def get_npr(city)
+      url = NPR_SEARCH + city + NPR_OUTPUT + ENV["NPR_API"]
+      npr_response = HTTParty.get(url)
+      munge_npr(npr_response)
+    end
+
+    def get_nyt(city, desk)
+      url = NYT_SEARCH + city + desk + ENV["NYT_API"]
+      nyt_response = HTTParty.get(url)
+      munge_nyt(nyt_response)
+    end
+
+    def munge_nyt(response)
+      hash = JSON.parse(response)
+      all_stories = hash["response"]["docs"]
+      return all_stories
+    end
+
+    def munge_npr(response)
+      hash = JSON.parse(response)
+      all_stories = hash["list"]["story"]
+      stories = all_stories.first(5)
+      stories.map do |story|
+        {
+          link: story.fetch("link", ""),
+          title: story.fetch("title", ""),
+          teaser: story.fetch("teaser", ""),
+          date: story.fetch("storyDate", ""),
+          image: story.fetch("image", ""),
+          text: story.fetch("fullText", "")
+        }
+      end
+    end
 end

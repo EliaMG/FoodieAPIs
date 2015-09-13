@@ -41,7 +41,7 @@
   height: 100%;
 }
 
-.npr-article {
+.story-article {
   margin-top: 10px;
   text-align: center;
   margin-bottom: 10px;
@@ -64,6 +64,10 @@
   text-align: left;
 }
 
+.story-image img {
+  max-height: 150px;
+  max-width: 200px;
+}
 .story-date {
   font-size: 1.3rem;
   text-align: left;

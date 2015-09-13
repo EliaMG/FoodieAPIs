@@ -23,21 +23,14 @@ class ApisController < ApplicationController
   def austin
     get_city_data("Austin")
   end
-    # begin
-    #   code = :ok
-    # rescue
-    #   @npr_data = {}
-    #   code = :no_content
-    # end
-    #   render json: data.as_json, code: code
 
 private
 
     def get_city_data(city)
       @npr_data = get_npr(city)
-
-      @nyt_travel = get_nyt(city, NYT_TRAVEL_DESK)
-      @nyt_food = get_nyt(city, NYT_FOOD_DESK)
+      nyt_travel = get_nyt(city, NYT_TRAVEL_DESK)
+      nyt_food = get_nyt(city, NYT_FOOD_DESK)
+      @nyt_data = nyt_travel + nyt_food
     end
 
     def get_npr(city)

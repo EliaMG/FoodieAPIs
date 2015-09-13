@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get '/seattle' => 'apis#seattle'
+  get '/chicago' => 'apis#chicago'
+  get '/boston' => 'apis#boston'
+  get '/austin' => 'apis#austin'
   # Example of regular route:
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

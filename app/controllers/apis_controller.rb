@@ -12,6 +12,17 @@ class ApisController < ApplicationController
     get_city_data("Seattle")
   end
 
+  def chicago
+    get_city_data("Chicago")
+  end
+
+  def boston
+    get_city_data("Boston")
+  end
+
+  def austin
+    get_city_data("Austin")
+  end
     # begin
     #   code = :ok
     # rescue

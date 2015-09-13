@@ -1,10 +1,41 @@
 require 'rails_helper'
-# TIMJ_POP =    { cassette_name: "TIMJ_popular", record: :new_episodes }
+NPR_SEARCH = "http://api.npr.org/query?id=1053&searchTerm="
+NPR_OUTPUT = "&sort=dateDesc&output=JSON&searchType=mainText&apiKey="
+
+NYT_SEARCH = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q="
+NYT_TRAVEL_DESK = '&fq=news_desk:("Travel")&api-key='
+NYT_FOOD_DESK = '&fq=news_desk:("Food")&api-key='
 
 RSpec.describe ApisController, type: :controller do
-  # describe "interacting with the This Is My Jam Artist API", vcr: TIMJ_SEARCH do
-  #   before :each do
-  #     get :search, artist: "the knife"
-  #   end
 
+  describe "loads a city's page" do
+
+    it "gets #seattle successfully" do
+      VCR.use_cassette "seattle_response" do
+        get :seattle
+        expect(response.response_code).to eq 200
+      end
+    end
+  end
+
+
+  describe "interacting with the NPR API" do
+    it "parses the response into an array" do
+      VCR.use_cassette 'get_npr' do
+        response = (controller.send(:get_npr, "Seattle"))
+
+        expect(response).to be_an_instance_of Array
+      end
+    end
+  end
+
+  describe "interacting with the NYT API" do
+    it "parses the response into an array" do
+      VCR.use_cassette 'get_nyt' do
+        response = (controller.send(:get_nyt, "Seattle", NYT_TRAVEL_DESK))
+
+        expect(response).to be_an_instance_of Array
+      end
+    end
+  end
 end

@@ -20,8 +20,7 @@ class ApisController < ApplicationController
     # end
     #   render json: data.as_json, code: code
 
-
-  private
+private
 
     def get_city_data(city)
       @npr_data = get_npr(city)
@@ -43,9 +42,17 @@ class ApisController < ApplicationController
     end
 
     def munge_nyt(response)
-      hash = JSON.parse(response)
-      all_stories = hash["response"]["docs"]
-      return all_stories
+      all_stories = response["response"]["docs"]
+      stories = all_stories.first(5)
+      stories.map do |story|
+        {
+          link: story.fetch("web_url", ""),
+          title: story.fetch("headline", ""),
+          teaser: story.fetch("snippet", ""),
+          date: story.fetch("pub_date", ""),
+          image: story.fetch("multimedia", "")
+        }
+      end
     end
 
     def munge_npr(response)

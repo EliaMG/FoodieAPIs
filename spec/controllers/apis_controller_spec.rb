@@ -37,6 +37,13 @@ RSpec.describe ApisController, type: :controller do
         expect(response.response_code).to eq 200
       end
     end
+
+    it "gets #louisville successfully" do
+      VCR.use_cassette "louisville_response" do
+        get :louisville
+        expect(response.response_code).to eq 200
+      end
+    end
   end
 
 

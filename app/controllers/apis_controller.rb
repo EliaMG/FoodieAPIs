@@ -24,6 +24,10 @@ class ApisController < ApplicationController
     get_city_data("Austin")
   end
 
+  def louisville
+    get_city_data("Louisville")
+  end
+
 private
 
     def get_city_data(city)

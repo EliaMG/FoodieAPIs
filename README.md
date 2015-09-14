@@ -15,8 +15,10 @@
 
   - What are your personal learning goals?
     - Getting comfortable extracting data in XML or JSON from a new API
-    - Practice with AJAX, JQuery and Javascript
+    - ~~Practice with AJAX, JQuery and Javascript~~
     - Practice styling with Bootstrap
+
+  - *I ended up just using ruby and rails, not Javascript, since I wanted a different background for every city and it was nice to have a landing page for each city*
 
   - What technologies/frameworks/patterns will you be employing?
     - Basic rails setup (not MVC)
@@ -24,7 +26,7 @@
       - HTTParty gem
       - VCR gem for API hit testing
     - Trello
-    - Jquery/Ajax/Javascript
+    - ~~Jquery/Ajax/Javascript~~
     - JSON/API documentation
 
   - What are the tech and/or skill dependencies of your project?
